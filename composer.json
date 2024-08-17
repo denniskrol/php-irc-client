@@ -1,0 +1,42 @@
+{
+    "name": "thirdplace/irc",
+    "description": "IRC library and client (bot)",
+    "keywords": ["irc", "ircv3", "1489", "rfc1489"],
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://thirdplace.no",
+    "authors": [
+        {
+            "name": "Dag",
+            "email": "me@dvikan.no",
+            "homepage": "https://dvikan.no"
+        }
+    ],
+    "support": {
+        "docs": "https://thirdplace.no/irc",
+        "issues": "https://todo.sr.ht/~thirdplace/issues",
+        "email": "support@thirdplace.no",
+        "irc": "irc://irc.libera.chat/thirdplace",
+        "source": "https://git.sr.ht/~thirdplace/irc"
+    },
+    "autoload": {
+        "psr-4": {
+            "Thirdplace\\Irc\\": [
+                "src/",
+                "src/handlers/"
+            ]
+        }
+    },
+    "require": {
+        "php" : ">=7.4",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-sockets": "*",
+        "ext-posix": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit --bootstrap=vendor/autoload.php ./test"
+    }
+}
