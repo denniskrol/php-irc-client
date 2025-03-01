@@ -42,6 +42,8 @@ final class Client
             'auth'      => null,
             'pipe_file' => null,
             'output_log' => true,
+            'timeout'   => 30,
+            'verify_peer' => true,
         ];
 
         $config = array_merge($defaults, $config);
@@ -143,7 +145,13 @@ final class Client
     {
         $this->log('Connect');
         $address = sprintf('%s://%s:%s', $this->config['protocol'], $this->config['server'], $this->config['port']);
-        $this->socket = stream_socket_client($address);
+        $options = [
+            'ssl' => [
+                'verify_peer' => $this->config['verify_peer'],
+                'verify_peer_name' => $this->config['verify_peer'],
+            ],
+        ];
+        $this->socket = stream_socket_client($address, $errno, $errstr, $this->config['timeout'], STREAM_CLIENT_CONNECT, stream_context_create($options));
         if ($this->socket === false) {
             throw new IrcException('stream_socket_client');
         }
@@ -158,7 +166,7 @@ final class Client
             case 'sasl':
                 $this->authenticateWithSasl();
                 break;
-	        case 'twitch':
+            case 'twitch':
                 $this->authenticateWithTwitch();
                 break;
             default:
@@ -231,7 +239,7 @@ final class Client
         $this->write(Message::nick($this->config['nick']));
     }
 
-	private function register(): void
+    private function register(): void
     {
         $this->write(Message::user($this->config['user'] ?? $this->config['nick']));
         $this->write(Message::nick($this->config['nick']));

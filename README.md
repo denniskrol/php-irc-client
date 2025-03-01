@@ -1,4 +1,4 @@
-# irc
+# PHP IRC Client
 Forked from [thirdplace/irc](https://git.sr.ht/~thirdplace/irc)
 
 A very basic IRC library and client (bot).
@@ -11,6 +11,7 @@ Unclear if the network code is any good.
 * Make `Message::from()` public
 * Update `Message::from()` regex to support nicknames with dashes
 * Make output logging optional
+* Add option to accept invalid SSL certificates
 
 ## Tutorial
 
@@ -152,6 +153,9 @@ $defaults = [
     'token'     => null, // oauth auth token (twitch.tv et al)
     'channels'  => [], // List of channels to join
     'pipe_file' => null, // Write raw text to server
+    'output_log' => true, // echo output
+    'timeout'   => 30, // Connection timeout
+    'verify_peer' => true, // Verify SSL certificate
 ];
 ```
 
